@@ -1,0 +1,133 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>I Saw It First - JS</title>
+
+    <!-- Import Materialize CSS -->
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- jquery -->
+    <script
+      src="https://code.jquery.com/jquery-3.4.0.min.js"
+      integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <table id="product-table" class="table">
+        <thead>
+          <tr>
+            <th>Name <button onclick="sortBy('title', 0)">A-Z</button><button onclick="sortBy('title', 1)">Z-A</button></th>
+            <th>Product Type <button onclick="sortBy('typet', 0)">A-Z</button><button onclick="sortBy('type', 1)">Z-A</button></th>
+            <th>Sizes</th>
+            <th>Vendor <button onclick="sortBy('vendor', 0)">A-Z</button><button onclick="sortBy('vendor', 1)">Z-A</button></th>
+            <th>Tags</th>
+          </tr>
+        </thead>
+
+        <tbody></tbody>
+      </table>
+    </div>
+  </body>
+
+  <script type="text/javascript">
+    let sortDirection = false;
+    let tableData = [];
+    let allProducts = [];
+    const productBody = document.querySelector("#product-table > tbody");
+
+    function populateTable(products) {
+      products.forEach(product => {
+        $("tbody").append(`<tr>
+            <td>${product.title}</td>
+            <td>${product.product_type}</td>
+            <td>${product.options[0].values.join(",")}</td>
+            <td>${product.vendor}</td>
+            <td>${product.tags
+              .split(",")
+              .splice(0, 4)
+              .join(",")}</td>
+          </tr>`);
+      });
+    }
+
+    function sortBy(value, reverse) {
+      products = allProducts.sort((a, b) => {
+        const nameAType = a.product_type.toLowerCase();
+        const nameBType = b.product_type.toLowerCase();
+        const nameAVendor = a.vendor.toLowerCase();
+        const nameBVendor = b.vendor.toLowerCase();
+        const nameATitle = a.title.toLowerCase();
+        const nameBTitle = b.title.toLowerCase();
+        if (value === "type") {
+          if (nameAType < nameBType) {
+            return 1;
+          }
+          if (nameAType > nameBType) {
+            return -1;
+          }
+          return 0;
+        } else if (value === "vendor") {
+          if (nameAVendor < nameBVendor) {
+            return 1;
+          }
+          if (nameAVendor > nameBVendor) {
+            return -1;
+          }
+          return 0;
+        } else if (value === "title") {
+          if (nameATitle < nameBTitle) {
+            return 1;
+          }
+          if (nameATitle > nameBTitle) {
+            return -1;
+          }
+          return 0;
+        }
+        return null;
+      });
+
+      $("tbody").html("");
+
+      if (reverse === 0) {
+          populateTable(products.reverse());
+      } else {
+        populateTable(products);
+      } 
+    }
+
+    function loadProducts() {
+      const request = new XMLHttpRequest();
+
+      request.open(
+        "get",
+        "https://jkq0dchnp0.execute-api.eu-west-1.amazonaws.com/dev/get-json-data"
+      );
+      request.onload = () => {
+        try {
+          const data = JSON.parse(request.responseText);
+          console.log(data.products);
+          allProducts = data.products;
+          populateTable(data.products);
+        } catch (error) {
+          console.warn("Could not load products :(");
+        }
+      };
+      request.send();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadProducts();
+    });
+  </script>
+</html>
