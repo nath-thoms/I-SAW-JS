@@ -1,0 +1,22 @@
+.container-fluid {
+    background-color: #2C3539;
+    color: #fefefe;
+    text-align: center;
+}
+
+.container {
+    background-color: #fefefe;
+    border-radius: 6px;
+}
+
+body {
+    background-color: #2C3539;
+}
+
+.rounded {
+    background-color: #4febb6;
+}
+
+button {
+    margin-right: 5px;
+}

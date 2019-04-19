@@ -7,11 +7,12 @@
 
     <!-- Import Materialize CSS -->
     <!-- Compiled and minified CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     />
-
+    <link rel="stylesheet" type="text/css" href="styles.css" />
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
@@ -23,21 +24,25 @@
     ></script>
   </head>
   <body>
-    <div class="container">
-      <table id="product-table" class="table">
-        <thead>
-          <tr>
-            <th>Name <button onclick="sortBy('title', 0)">A-Z</button><button onclick="sortBy('title', 1)">Z-A</button></th>
-            <th>Product Type <button onclick="sortBy('typet', 0)">A-Z</button><button onclick="sortBy('type', 1)">Z-A</button></th>
-            <th>Sizes</th>
-            <th>Vendor <button onclick="sortBy('vendor', 0)">A-Z</button><button onclick="sortBy('vendor', 1)">Z-A</button></th>
-            <th>Tags</th>
-          </tr>
-        </thead>
-
-        <tbody></tbody>
-      </table>
+    <div class="container-fluid">
+      <h2>I Saw It First - Tech assessment - JavaScript</h2>
+        <div class="container">
+            <table id="product-table" class="table">
+              <thead>
+                <tr>
+                  <th>Name <button class="btn-small waves-effect" onclick="sortBy('title', 0), M.toast({html: 'Sorted A-Z', classes: 'rounded'})"><i class="material-icons">arrow_downward</i></button><button class="btn-small waves-effect" onclick="sortBy('title', 1), M.toast({html: 'Sorted Z-A', classes: 'rounded'})"><i class="material-icons">arrow_upward</i></button></th>
+                  <th>Product Type <button class="btn-small waves-effect" onclick="sortBy('typet', 0), M.toast({html: 'Sorted A-Z', classes: 'rounded'})"><i class="material-icons">arrow_downward</i></button><button class="btn-small waves-effect" onclick="sortBy('type', 1), M.toast({html: 'Sorted Z-A', classes: 'rounded'})"><i class="material-icons">arrow_upward</i></button></th>
+                  <th>Sizes</th>
+                  <th>Vendor <button class="btn-small waves-effect" onclick="sortBy('vendor', 0), M.toast({html: 'Sorted A-Z', classes: 'rounded'})"><i class="material-icons">arrow_downward</i></button><button class="btn-small waves-effect" onclick="sortBy('vendor', 1), M.toast({html: 'Sorted Z-A', classes: 'rounded'})"><i class="material-icons">arrow_upward</i></button></th>
+                  <th>Tags</th>
+                </tr>
+              </thead>
+      
+              <tbody></tbody>
+            </table>
+          </div>
     </div>
+    
   </body>
 
   <script type="text/javascript">
